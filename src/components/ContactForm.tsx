@@ -1,4 +1,8 @@
+'use client';
+import { useState } from 'react';
+
 export default function ContactForm() {
+  const [isMessageSent, setIsMessageSent] = useState(false);
   return (
     <div className="relative isolate bg-white dark:bg-zinc-800">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
@@ -81,7 +85,39 @@ export default function ContactForm() {
             </dl>
           </div>
         </div>
-        <form action="#" method="POST" className="px-6 pt-8 pb-6 sm:pb-32 lg:px-8 lg:py-12">
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.currentTarget);
+            const data = {
+              first_name: formData.get('first-name'),
+              last_name: formData.get('last-name'),
+              email: formData.get('email'),
+              phone: formData.get('phone-number'),
+              message: formData.get('message')
+            };
+
+            try {
+              const response = await fetch('https://saurabhpunia.42web.io/api/contact', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+              if (response.ok) {
+                e.currentTarget.reset();
+                setIsMessageSent(true);
+              } else {
+                throw new Error('Failed to send message');
+              }
+            } catch (error) {
+              console.error('Error: ', error);
+            }
+          }}
+          className="px-6 pt-8 pb-6 sm:pb-32 lg:px-8 lg:py-12"
+          >
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
@@ -94,6 +130,7 @@ export default function ContactForm() {
                     name="first-name"
                     type="text"
                     autoComplete="given-name"
+                    required
                     className="block w-full rounded-md bg-white dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 dark:outline-white/10 dark:placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:focus:outline-indigo-500"
                   />
                 </div>
@@ -108,6 +145,7 @@ export default function ContactForm() {
                     name="last-name"
                     type="text"
                     autoComplete="family-name"
+                    required
                     className="block w-full rounded-md bg-white dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 dark:outline-white/10 dark:placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:focus:outline-indigo-500"
                   />
                 </div>
@@ -122,6 +160,7 @@ export default function ContactForm() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    required
                     className="block w-full rounded-md bg-white dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 dark:outline-white/10 dark:placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:focus:outline-indigo-500"
                   />
                 </div>
@@ -136,6 +175,7 @@ export default function ContactForm() {
                     name="phone-number"
                     type="tel"
                     autoComplete="tel"
+                    required
                     className="block w-full rounded-md bg-white dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 dark:outline-white/10 dark:placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:focus:outline-indigo-500"
                   />
                 </div>
@@ -149,12 +189,20 @@ export default function ContactForm() {
                     id="message"
                     name="message"
                     rows={4}
+                    required
                     className="block w-full rounded-md bg-white dark:bg-white/5 px-3.5 py-2 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 dark:outline-white/10 dark:placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:focus:outline-indigo-500"
                     defaultValue={''}
                   />
                 </div>
               </div>
             </div>
+            {isMessageSent && (
+              <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 rounded-md">
+                <p className="text-green-700 dark:text-green-300">
+                  Thank you for your message. I'll review it and respond shortly.
+                </p>
+              </div>
+            )}
             <div className="mt-8 flex justify-end">
               <button
                 type="submit"
