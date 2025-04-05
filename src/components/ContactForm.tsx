@@ -100,6 +100,7 @@ export default function ContactForm() {
             try {
               const response = await fetch('https://saurabhpunia.42web.io/api/contact', {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'
@@ -107,7 +108,6 @@ export default function ContactForm() {
                 body: JSON.stringify(data)
               });
               if (response.ok) {
-                e.currentTarget.reset();
                 setIsMessageSent(true);
               } else {
                 throw new Error('Failed to send message');
