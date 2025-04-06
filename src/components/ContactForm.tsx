@@ -5,10 +5,10 @@ export default function ContactForm() {
   const [isMessageSent, setIsMessageSent] = useState(false);
   return (
     <div className="relative isolate bg-white dark:bg-zinc-800">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-7xl grid-cols-1">
         <div className="relative px-6 pt-8 pb-6 sm:pt-8 lg:static lg:px-8 lg:py-12">
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 bg-gray-100 ring-gray-900/10 dark:bg-zinc-900 dark:ring-white/5 lg:w-1/2">
+            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 bg-gray-100 ring-gray-900/10 dark:bg-zinc-900 dark:ring-white/5">
               <svg
                 aria-hidden="true"
                 className="absolute inset-0 size-full stroke-gray-200 dark:stroke-zinc-700 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -116,7 +116,7 @@ export default function ContactForm() {
               console.error('Error: ', error);
             }
           }}
-          className="px-6 pt-8 pb-6 sm:pb-32 lg:px-8 lg:py-12"
+          className="hidden px-6 pt-8 pb-6 sm:pb-32 lg:px-8 lg:py-12"
           >
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
