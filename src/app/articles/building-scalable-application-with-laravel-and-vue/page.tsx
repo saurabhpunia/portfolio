@@ -3,7 +3,7 @@ import { ArticleLayout } from '@/components/ArticleLayout'
 import laravelVueImg from './laravel-vue.png'
 
 const article = {
-    author: 'Adam Wathan',
+    author: 'Saurabh Punia',
     date: '2025-02-04',
     title: 'Building Scalable Web Applications with Laravel and Vue.js',
     description:
